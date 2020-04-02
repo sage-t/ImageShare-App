@@ -3,8 +3,28 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import logo from './assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
+
+function App() {
   let [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -48,21 +68,29 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo}/>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{}}>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+        {/* <View style={styles.container}>
+          <Image source={logo} style={styles.logo}/>
 
-      <Text style={styles.instructions}>
-        To share a photo from your phone with a friend, just press the button below!
-      </Text>
+          <Text style={styles.instructions}>
+            To share a photo from your phone with a friend, just press the button below!
+          </Text>
 
-      <TouchableOpacity
-        onPress={openImagePickerAsync}
-        style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity
+            onPress={openImagePickerAsync}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Pick a photo</Text>
+          </TouchableOpacity>
+        </View> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
