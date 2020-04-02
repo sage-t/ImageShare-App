@@ -17,6 +17,10 @@ function HomeScreen({navigation}) {
           otherParam: 'any param'
         })}
       />
+      <Button
+        title="Update the title"
+        onPress={() => navigation.setOptions({ title: 'Updated!' })}
+      />
     </View>
   );
 }
@@ -94,9 +98,27 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{}}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
-        <Stack.Screen name="Details" component={DetailsScreen} initialParams={{ otherParam: 'default value' }} />
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{title: 'Overview'}} 
+        />
+        <Stack.Screen 
+          name="Details" 
+          component={DetailsScreen} 
+          initialParams={{ otherParam: 'default value' }} 
+          options={({ route }) => ({ title: route.params.itemId })}
+        />
         {/* <View style={styles.container}>
           <Image source={logo} style={styles.logo}/>
 
